@@ -128,14 +128,16 @@ branch_statement
   : _BRANCH _LPAREN _ID _SEMICOLON literal _ZAREZ literal _ZAREZ literal _RPAREN _FIRST statement _SECOND statement _THIRD statement {
 	int indxID = lookup_symbol($3 , VAR|PAR);
 	
-//var prethodno mora biti definisana
-	if(indxID == -1) 
+	//var prethodno mora biti definisana
+	if(indxID == -1){
 	  err("var prethodno mora biti definisan!");
-
-//Konstante moraju biti istog tipa kao i var
-	if((get_type(indxID) != get_type($5)) || (get_type(indxID) != get_type($7)) || (get_type(indxID) != get_type($9)))
-	   err("Var i konstante moraju biti istog tipa!");	
+	}else{
+		//Konstante moraju biti istog tipa kao i var
+		if((get_type(indxID) != get_type($5)) || (get_type(indxID) != get_type($7)) || (get_type(indxID) != get_type($9)))
+	  	    err("Var i konstante moraju biti istog tipa!");	
 	}
+
+  }
   ;
 compound_statement
   : _LBRACKET statement_list _RBRACKET 
