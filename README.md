@@ -1,7 +1,7 @@
 # Zadaci iz predmeta Programski Prevodioci 
 
 <p align="center">
-  <img width="975" height="311" src="">
+  <img width="600" height="400" src="http://www.rgpvonline.com/answer/ppl/img/3.jpg">
 </p>
 
 
