@@ -10,6 +10,7 @@ int main() {
     y = x++ + x++ + 42;
     return x + y;
 }
+//PAZI NA POSTINKREMENT TREBA DA SE IZVRSI TEK NAKON DODELE VREDNOSTI
 
 Izlazni kod treba da proizvede rezultat 53. 
 Generisanje operacije za inkrement treba da bude 
