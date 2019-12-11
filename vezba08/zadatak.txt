@@ -19,3 +19,25 @@ Primer 2:
 
     a = a + (a == b) ? a : b + 3;
 
+
+
+//Izaraz 1 i izraz 2 ne smeju biti exp zato sto exp moze da bude funtion call i jos svasta nesto !!! pazi na ovo
+
+Mozemo da koristimo foru da zapisemo kako bi trebao otp da izgleda asemblerski kod pa na osnovu njega cem lako generisati kod 
+
+
+a = (a < b) ? a : b
+
+	CMPS -4(%14), -8(%14)
+	JGES @false
+        MOV -4(%14), %0   //mozemo gore da imamo jos neki izraz tip a = 4 + (a<b)....
+        JMP @exit
+
+@false0: 
+	 MOV -8(%14), %0
+
+@exit0:
+	
+
+
+

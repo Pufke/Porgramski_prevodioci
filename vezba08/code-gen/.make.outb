@@ -1,0 +1,15 @@
+micko.y:277.22-23: error: $5 of ‘conditional_statement’ has no declared type
+          if(get_type($5) != get_type($7))
+                      ^^
+micko.y:277.38-39: error: $7 of ‘conditional_statement’ has no declared type
+          if(get_type($5) != get_type($7))
+                                      ^^
+micko.y:286.11-12: error: $$ of ‘izraz’ has no declared type
+    : _ID {$$ = $1}
+           ^^
+micko.y:287.16-17: error: $$ of ‘izraz’ has no declared type
+    | literal { $$ = $2 } 
+                ^^
+micko.y:287.21-22: error: integer out of range: ‘$2’
+    | literal { $$ = $2 } 
+                     ^^
