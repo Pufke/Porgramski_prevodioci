@@ -1,6 +1,0 @@
-micko.y:200.5-59: warning: type clash on default action: <i> != <> [-Wother]
-   | _LPAREN rel_exp _RPAREN _QMARK cond_exp _COLON cond_exp 
-     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-micko.y:205.5-7: warning: type clash on default action: <i> != <s> [-Wother]
-   : _ID
-     ^^^

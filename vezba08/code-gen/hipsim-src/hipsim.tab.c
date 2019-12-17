@@ -1,8 +1,8 @@
-/* A Bison parser, made by GNU Bison 3.0.2.  */
+/* A Bison parser, made by GNU Bison 3.0.4.  */
 
 /* Bison implementation for Yacc-like parsers in C
 
-   Copyright (C) 1984, 1989-1990, 2000-2013 Free Software Foundation, Inc.
+   Copyright (C) 1984, 1989-1990, 2000-2015 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -44,7 +44,7 @@
 #define YYBISON 1
 
 /* Bison version.  */
-#define YYBISON_VERSION "3.0.2"
+#define YYBISON_VERSION "3.0.4"
 
 /* Skeleton name.  */
 #define YYSKELETON_NAME "yacc.c"
@@ -164,7 +164,7 @@ extern int yydebug;
 
 /* Value type.  */
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
-typedef union YYSTYPE YYSTYPE;
+
 union YYSTYPE
 {
 #line 49 "hipsim.y" /* yacc.c:355  */
@@ -174,6 +174,8 @@ union YYSTYPE
 
 #line 176 "hipsim.tab.c" /* yacc.c:355  */
 };
+
+typedef union YYSTYPE YYSTYPE;
 # define YYSTYPE_IS_TRIVIAL 1
 # define YYSTYPE_IS_DECLARED 1
 #endif
@@ -187,7 +189,7 @@ int yyparse (void);
 
 /* Copy the second part of user declarations.  */
 
-#line 191 "hipsim.tab.c" /* yacc.c:358  */
+#line 193 "hipsim.tab.c" /* yacc.c:358  */
 
 #ifdef short
 # undef short
@@ -1327,13 +1329,13 @@ yyreduce:
     {
             add_entry_code(mainarg);
         }
-#line 1331 "hipsim.tab.c" /* yacc.c:1646  */
+#line 1333 "hipsim.tab.c" /* yacc.c:1646  */
     break;
 
   case 5:
 #line 111 "hipsim.y" /* yacc.c:1646  */
     { (yyval.i) = yylineno; }
-#line 1337 "hipsim.tab.c" /* yacc.c:1646  */
+#line 1339 "hipsim.tab.c" /* yacc.c:1646  */
     break;
 
   case 6:
@@ -1345,7 +1347,7 @@ yyreduce:
             insert_source("%s:\t\t\tWORD %ld",(yyvsp[-3].s),(yyvsp[0].i));
             insert_data(data,len, (yyvsp[-3].s), (yyvsp[-2].i));
         }
-#line 1349 "hipsim.tab.c" /* yacc.c:1646  */
+#line 1351 "hipsim.tab.c" /* yacc.c:1646  */
     break;
 
   case 11:
@@ -1355,7 +1357,7 @@ yyreduce:
             insert_label((yyvsp[0].s), code_cnt, yylineno, SYM_JUMP);
             source_cnt++;
         }
-#line 1359 "hipsim.tab.c" /* yacc.c:1646  */
+#line 1361 "hipsim.tab.c" /* yacc.c:1646  */
     break;
 
   case 15:
@@ -1364,7 +1366,7 @@ yyreduce:
             insert_source("\t\t\tHALT");
             insert_code(INS_HALT, NO_TYPE, yylineno);
         }
-#line 1368 "hipsim.tab.c" /* yacc.c:1646  */
+#line 1370 "hipsim.tab.c" /* yacc.c:1646  */
     break;
 
   case 16:
@@ -1374,7 +1376,7 @@ yyreduce:
             insert_code(INS_ADD, (yyvsp[-5].i), yylineno);
             free((yyvsp[-4].s)); free((yyvsp[-2].s)); free((yyvsp[0].s));
         }
-#line 1378 "hipsim.tab.c" /* yacc.c:1646  */
+#line 1380 "hipsim.tab.c" /* yacc.c:1646  */
     break;
 
   case 17:
@@ -1384,7 +1386,7 @@ yyreduce:
             insert_code(INS_SUB, (yyvsp[-5].i), yylineno);
             free((yyvsp[-4].s)); free((yyvsp[-2].s)); free((yyvsp[0].s));
         }
-#line 1388 "hipsim.tab.c" /* yacc.c:1646  */
+#line 1390 "hipsim.tab.c" /* yacc.c:1646  */
     break;
 
   case 18:
@@ -1394,7 +1396,7 @@ yyreduce:
             insert_code(INS_MUL, (yyvsp[-5].i), yylineno);
             free((yyvsp[-4].s)); free((yyvsp[-2].s)); free((yyvsp[0].s));
         }
-#line 1398 "hipsim.tab.c" /* yacc.c:1646  */
+#line 1400 "hipsim.tab.c" /* yacc.c:1646  */
     break;
 
   case 19:
@@ -1404,7 +1406,7 @@ yyreduce:
             insert_code(INS_DIV, (yyvsp[-5].i), yylineno);
             free((yyvsp[-4].s)); free((yyvsp[-2].s)); free((yyvsp[0].s));
         }
-#line 1408 "hipsim.tab.c" /* yacc.c:1646  */
+#line 1410 "hipsim.tab.c" /* yacc.c:1646  */
     break;
 
   case 20:
@@ -1414,7 +1416,7 @@ yyreduce:
             insert_code(INS_MOV, NO_TYPE, yylineno);
             free((yyvsp[-2].s)); free((yyvsp[0].s));
         }
-#line 1418 "hipsim.tab.c" /* yacc.c:1646  */
+#line 1420 "hipsim.tab.c" /* yacc.c:1646  */
     break;
 
   case 21:
@@ -1424,7 +1426,7 @@ yyreduce:
             insert_code(INS_CMP, (yyvsp[-3].i), yylineno);
             free((yyvsp[-2].s)); free((yyvsp[0].s));
         }
-#line 1428 "hipsim.tab.c" /* yacc.c:1646  */
+#line 1430 "hipsim.tab.c" /* yacc.c:1646  */
     break;
 
   case 22:
@@ -1433,7 +1435,7 @@ yyreduce:
             insert_source("\t\t\tJMP %s", (yyvsp[0].s));
             insert_code(INS_JMP, NO_TYPE, yylineno);
         }
-#line 1437 "hipsim.tab.c" /* yacc.c:1646  */
+#line 1439 "hipsim.tab.c" /* yacc.c:1646  */
     break;
 
   case 23:
@@ -1442,7 +1444,7 @@ yyreduce:
             insert_source("\t\t\tJEQ %s", (yyvsp[0].s));
             insert_code(INS_JEQ, NO_TYPE, yylineno);
         }
-#line 1446 "hipsim.tab.c" /* yacc.c:1646  */
+#line 1448 "hipsim.tab.c" /* yacc.c:1646  */
     break;
 
   case 24:
@@ -1451,7 +1453,7 @@ yyreduce:
             insert_source("\t\t\tJNE %s", (yyvsp[0].s));
             insert_code(INS_JNE, NO_TYPE, yylineno);
         }
-#line 1455 "hipsim.tab.c" /* yacc.c:1646  */
+#line 1457 "hipsim.tab.c" /* yacc.c:1646  */
     break;
 
   case 25:
@@ -1460,7 +1462,7 @@ yyreduce:
             insert_source("\t\t\tJGT%c %s", type_char((yyvsp[-1].i)), (yyvsp[0].s));
             insert_code(INS_JGT, (yyvsp[-1].i), yylineno);
         }
-#line 1464 "hipsim.tab.c" /* yacc.c:1646  */
+#line 1466 "hipsim.tab.c" /* yacc.c:1646  */
     break;
 
   case 26:
@@ -1469,7 +1471,7 @@ yyreduce:
             insert_source("\t\t\tJLT%c %s", type_char((yyvsp[-1].i)), (yyvsp[0].s));
             insert_code(INS_JLT, (yyvsp[-1].i), yylineno);
         }
-#line 1473 "hipsim.tab.c" /* yacc.c:1646  */
+#line 1475 "hipsim.tab.c" /* yacc.c:1646  */
     break;
 
   case 27:
@@ -1478,7 +1480,7 @@ yyreduce:
             insert_source("\t\t\tJGE%c %s", type_char((yyvsp[-1].i)), (yyvsp[0].s));
             insert_code(INS_JGE, (yyvsp[-1].i), yylineno);
         }
-#line 1482 "hipsim.tab.c" /* yacc.c:1646  */
+#line 1484 "hipsim.tab.c" /* yacc.c:1646  */
     break;
 
   case 28:
@@ -1487,7 +1489,7 @@ yyreduce:
             insert_source("\t\t\tJLE%c %s", type_char((yyvsp[-1].i)), (yyvsp[0].s));
             insert_code(INS_JLE, (yyvsp[-1].i), yylineno);
         }
-#line 1491 "hipsim.tab.c" /* yacc.c:1646  */
+#line 1493 "hipsim.tab.c" /* yacc.c:1646  */
     break;
 
   case 29:
@@ -1496,7 +1498,7 @@ yyreduce:
             insert_source("\t\t\tJC %s", (yyvsp[0].s));
             insert_code(INS_JC, NO_TYPE, yylineno);
         }
-#line 1500 "hipsim.tab.c" /* yacc.c:1646  */
+#line 1502 "hipsim.tab.c" /* yacc.c:1646  */
     break;
 
   case 30:
@@ -1505,7 +1507,7 @@ yyreduce:
             insert_source("\t\t\tJNC %s", (yyvsp[0].s));
             insert_code(INS_JNC, NO_TYPE, yylineno);
         }
-#line 1509 "hipsim.tab.c" /* yacc.c:1646  */
+#line 1511 "hipsim.tab.c" /* yacc.c:1646  */
     break;
 
   case 31:
@@ -1514,7 +1516,7 @@ yyreduce:
             insert_source("\t\t\tJO %s", (yyvsp[0].s));
             insert_code(INS_JO, NO_TYPE, yylineno);
         }
-#line 1518 "hipsim.tab.c" /* yacc.c:1646  */
+#line 1520 "hipsim.tab.c" /* yacc.c:1646  */
     break;
 
   case 32:
@@ -1523,7 +1525,7 @@ yyreduce:
             insert_source("\t\t\tJNO %s", (yyvsp[0].s));
             insert_code(INS_JNO, NO_TYPE, yylineno);
         }
-#line 1527 "hipsim.tab.c" /* yacc.c:1646  */
+#line 1529 "hipsim.tab.c" /* yacc.c:1646  */
     break;
 
   case 33:
@@ -1533,7 +1535,7 @@ yyreduce:
             insert_code(INS_PUSH, NO_TYPE, yylineno);
             free((yyvsp[0].s));
         }
-#line 1537 "hipsim.tab.c" /* yacc.c:1646  */
+#line 1539 "hipsim.tab.c" /* yacc.c:1646  */
     break;
 
   case 34:
@@ -1543,7 +1545,7 @@ yyreduce:
             insert_code(INS_POP, NO_TYPE, yylineno);
             free((yyvsp[0].s));
         }
-#line 1547 "hipsim.tab.c" /* yacc.c:1646  */
+#line 1549 "hipsim.tab.c" /* yacc.c:1646  */
     break;
 
   case 35:
@@ -1552,7 +1554,7 @@ yyreduce:
             insert_source("\t\t\tCALL %s", (yyvsp[0].s));
             insert_code(INS_CALL, NO_TYPE, yylineno);
         }
-#line 1556 "hipsim.tab.c" /* yacc.c:1646  */
+#line 1558 "hipsim.tab.c" /* yacc.c:1646  */
     break;
 
   case 36:
@@ -1561,7 +1563,7 @@ yyreduce:
             insert_source("\t\t\tRET");
             insert_code(INS_RET, NO_TYPE, yylineno);
         }
-#line 1565 "hipsim.tab.c" /* yacc.c:1646  */
+#line 1567 "hipsim.tab.c" /* yacc.c:1646  */
     break;
 
   case 37:
@@ -1572,7 +1574,7 @@ yyreduce:
             l = use_label((yyvsp[0].s), yylineno);
             add_operand(OP_DATA,0,l);
         }
-#line 1576 "hipsim.tab.c" /* yacc.c:1646  */
+#line 1578 "hipsim.tab.c" /* yacc.c:1646  */
     break;
 
   case 38:
@@ -1581,7 +1583,7 @@ yyreduce:
             add_operand(OP_REGISTER,(yyvsp[0].i),0);
             (yyval.s) = make_opstr("%%%ld",(yyvsp[0].i));
         }
-#line 1585 "hipsim.tab.c" /* yacc.c:1646  */
+#line 1587 "hipsim.tab.c" /* yacc.c:1646  */
     break;
 
   case 39:
@@ -1590,7 +1592,7 @@ yyreduce:
             add_operand(OP_INDEX,(yyvsp[-1].i),(yyvsp[-3].i));
             (yyval.s) = make_opstr("%ld(%%%ld)",(yyvsp[-3].i),(yyvsp[-1].i));
         }
-#line 1594 "hipsim.tab.c" /* yacc.c:1646  */
+#line 1596 "hipsim.tab.c" /* yacc.c:1646  */
     break;
 
   case 40:
@@ -1599,7 +1601,7 @@ yyreduce:
             add_operand(OP_INDIRECT,(yyvsp[-1].i),0);
             (yyval.s) = make_opstr("(%%%ld)",(yyvsp[-1].i));
         }
-#line 1603 "hipsim.tab.c" /* yacc.c:1646  */
+#line 1605 "hipsim.tab.c" /* yacc.c:1646  */
     break;
 
   case 42:
@@ -1608,7 +1610,7 @@ yyreduce:
             add_operand(OP_CONSTANT,0,(yyvsp[0].i));
             (yyval.s) = make_opstr("$%ld",(yyvsp[0].i));
         }
-#line 1612 "hipsim.tab.c" /* yacc.c:1646  */
+#line 1614 "hipsim.tab.c" /* yacc.c:1646  */
     break;
 
   case 43:
@@ -1621,11 +1623,11 @@ yyreduce:
                 parsererror("Undeclared global variable %s",$1); */
             add_operand(OP_CONSTANT,0,symtab[l].address);
         }
-#line 1625 "hipsim.tab.c" /* yacc.c:1646  */
+#line 1627 "hipsim.tab.c" /* yacc.c:1646  */
     break;
 
 
-#line 1629 "hipsim.tab.c" /* yacc.c:1646  */
+#line 1631 "hipsim.tab.c" /* yacc.c:1646  */
       default: break;
     }
   /* User semantic actions sometimes alter yychar, and that requires

@@ -39,10 +39,10 @@ Grammar
    22        | num_exp _AROP exp
 
    23 exp: literal
-   24    | _ID
-   25    | function_call
-   26    | _LPAREN num_exp _RPAREN
-   27    | _LPAREN rel_exp _RPAREN _QMARK cond_exp _COLON cond_exp
+   24    | _LPAREN rel_exp _RPAREN _QMARK cond_exp _COLON cond_exp
+   25    | _ID
+   26    | function_call
+   27    | _LPAREN num_exp _RPAREN
 
    28 cond_exp: _ID
    29         | literal
@@ -79,19 +79,19 @@ _TYPE (258) 5 7 12
 _IF (259) 40
 _ELSE (260) 37
 _RETURN (261) 42
-_ID (262) 5 7 12 20 24 28 33
+_ID (262) 5 7 12 20 25 28 33
 _INT_NUMBER (263) 30
 _UINT_NUMBER (264) 31
-_LPAREN (265) 5 26 27 33 40
-_RPAREN (266) 5 26 27 33 40
+_LPAREN (265) 5 24 27 33 40
+_RPAREN (266) 5 24 27 33 40
 _LBRACKET (267) 9 19
 _RBRACKET (268) 9 19
 _ASSIGN (269) 20
 _SEMICOLON (270) 12 20 42
 _AROP (271) 22
 _RELOP (272) 41
-_QMARK (273) 27
-_COLON (274) 27
+_QMARK (273) 24
+_COLON (274) 24
 ONLY_IF (275)
 
 
@@ -126,15 +126,15 @@ compound_statement (33)
 assignment_statement (34)
     on left: 20, on right: 16
 num_exp (35)
-    on left: 21 22, on right: 20 22 26 35 41 42
+    on left: 21 22, on right: 20 22 27 35 41 42
 exp (36)
     on left: 23 24 25 26 27, on right: 21 22
 cond_exp (37)
-    on left: 28 29, on right: 27
+    on left: 28 29, on right: 24
 literal (38)
     on left: 30 31, on right: 23 29
 function_call (39)
-    on left: 33, on right: 25
+    on left: 33, on right: 26
 $@3 (40)
     on left: 32, on right: 33
 argument (41)
@@ -148,7 +148,7 @@ if_part (43)
 $@5 (45)
     on left: 39, on right: 40
 rel_exp (46)
-    on left: 41, on right: 27 40
+    on left: 41, on right: 24 40
 return_statement (47)
     on left: 42, on right: 18
 
@@ -454,11 +454,11 @@ State 34
 
 State 35
 
-   24 exp: _ID .
+   25 exp: _ID .
    33 function_call: _ID . $@3 _LPAREN argument _RPAREN
 
     _LPAREN   reduce using rule 32 ($@3)
-    $default  reduce using rule 24 (exp)
+    $default  reduce using rule 25 (exp)
 
     $@3  go to state 47
 
@@ -479,8 +479,8 @@ State 37
 
 State 38
 
-   26 exp: _LPAREN . num_exp _RPAREN
-   27    | _LPAREN . rel_exp _RPAREN _QMARK cond_exp _COLON cond_exp
+   24 exp: _LPAREN . rel_exp _RPAREN _QMARK cond_exp _COLON cond_exp
+   27    | _LPAREN . num_exp _RPAREN
 
     _ID           shift, and go to state 35
     _INT_NUMBER   shift, and go to state 36
@@ -519,9 +519,9 @@ State 41
 
 State 42
 
-   25 exp: function_call .
+   26 exp: function_call .
 
-    $default  reduce using rule 25 (exp)
+    $default  reduce using rule 26 (exp)
 
 
 State 43
@@ -601,7 +601,7 @@ State 47
 State 48
 
    22 num_exp: num_exp . _AROP exp
-   26 exp: _LPAREN num_exp . _RPAREN
+   27 exp: _LPAREN num_exp . _RPAREN
    41 rel_exp: num_exp . _RELOP num_exp
 
     _RPAREN  shift, and go to state 58
@@ -611,7 +611,7 @@ State 48
 
 State 49
 
-   27 exp: _LPAREN rel_exp . _RPAREN _QMARK cond_exp _COLON cond_exp
+   24 exp: _LPAREN rel_exp . _RPAREN _QMARK cond_exp _COLON cond_exp
 
     _RPAREN  shift, and go to state 60
 
@@ -698,9 +698,9 @@ State 57
 
 State 58
 
-   26 exp: _LPAREN num_exp _RPAREN .
+   27 exp: _LPAREN num_exp _RPAREN .
 
-    $default  reduce using rule 26 (exp)
+    $default  reduce using rule 27 (exp)
 
 
 State 59
@@ -720,7 +720,7 @@ State 59
 
 State 60
 
-   27 exp: _LPAREN rel_exp _RPAREN . _QMARK cond_exp _COLON cond_exp
+   24 exp: _LPAREN rel_exp _RPAREN . _QMARK cond_exp _COLON cond_exp
 
     _QMARK  shift, and go to state 67
 
@@ -775,7 +775,7 @@ State 66
 
 State 67
 
-   27 exp: _LPAREN rel_exp _RPAREN _QMARK . cond_exp _COLON cond_exp
+   24 exp: _LPAREN rel_exp _RPAREN _QMARK . cond_exp _COLON cond_exp
 
     _ID           shift, and go to state 70
     _INT_NUMBER   shift, and go to state 36
@@ -818,7 +818,7 @@ State 70
 
 State 71
 
-   27 exp: _LPAREN rel_exp _RPAREN _QMARK cond_exp . _COLON cond_exp
+   24 exp: _LPAREN rel_exp _RPAREN _QMARK cond_exp . _COLON cond_exp
 
     _COLON  shift, and go to state 74
 
@@ -839,7 +839,7 @@ State 73
 
 State 74
 
-   27 exp: _LPAREN rel_exp _RPAREN _QMARK cond_exp _COLON . cond_exp
+   24 exp: _LPAREN rel_exp _RPAREN _QMARK cond_exp _COLON . cond_exp
 
     _ID           shift, and go to state 70
     _INT_NUMBER   shift, and go to state 36
@@ -851,6 +851,6 @@ State 74
 
 State 75
 
-   27 exp: _LPAREN rel_exp _RPAREN _QMARK cond_exp _COLON cond_exp .
+   24 exp: _LPAREN rel_exp _RPAREN _QMARK cond_exp _COLON cond_exp .
 
-    $default  reduce using rule 27 (exp)
+    $default  reduce using rule 24 (exp)

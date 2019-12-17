@@ -385,7 +385,7 @@ struct yy_trans_info
 static const flex_int16_t yy_accept[74] =
     {   0,
         0,    0,   29,   27,    1,    1,   27,    7,    8,   15,
-       16,   27,   24,   13,   11,   17,   12,   18,   14,   23,
+       16,   27,   24,   14,   11,   17,   12,   18,   13,   23,
        23,   23,   23,   23,    9,   10,    1,   22,   24,   26,
        24,   25,   19,   21,   20,   23,   23,    4,   23,   23,
        23,   24,   26,   24,   23,    2,   23,   23,   24,   24,
@@ -874,12 +874,12 @@ YY_RULE_SETUP
 case 13:
 YY_RULE_SETUP
 #line 25 "micko.l"
-{ return _COLON; }
+{ return _QMARK; }
 	YY_BREAK
 case 14:
 YY_RULE_SETUP
 #line 26 "micko.l"
-{ return _QMARK; }
+{ return _COLON; }
 	YY_BREAK
 case 15:
 YY_RULE_SETUP
