@@ -42,12 +42,12 @@
 %token _SEMICOLON
 %token <i> _AROP
 %token <i> _RELOP
-%token _UPITNIK
+%token _QMARK
 %token _COLON
 
 %type <i> num_exp exp literal 
 %type <i> function_call argument rel_exp if_part
-%type <i> izraz
+%type <i> cond_exp
 
 %nonassoc ONLY_IF
 %nonassoc _ELSE
@@ -139,7 +139,6 @@ statement
   | assignment_statement
   | if_statement
   | return_statement
-  | conditional_statement
   ;
 
 
@@ -184,14 +183,12 @@ num_exp
 
 exp
   : literal
-
   | _ID
       {
         $$ = lookup_symbol($1, VAR|PAR);
         if($$ == NO_INDEX)
           err("'%s' undeclared", $1);
       }
-
   | function_call
       {
         $$ = take_reg();
@@ -200,7 +197,19 @@ exp
   
   | _LPAREN num_exp _RPAREN
       { $$ = $2; }
+  | _LPAREN rel_exp _RPAREN _QMARK cond_exp _COLON cond_exp 
+
   ;
+
+cond_exp
+  : _ID
+
+  | literal 
+  ;
+
+
+
+
 
 literal
   : _INT_NUMBER
@@ -261,7 +270,7 @@ if_part
     rel_exp
       {
         code("\n\t\t%s\t@false%d", opp_jumps[$4], $<i>3);
-        code("\n@true%d:", $<i>3);
+       
       }
     _RPAREN statement
       {
@@ -272,29 +281,6 @@ if_part
   ;
 
 
-
-
-
-
-
-
-conditional_statement
-   : _LPAREN rel_exp _RPAREN _UPITNIK izraz _COLON izraz {
-	//IZraz i izraz moraju da budu istog tipa 
-	if( get_type($5) != get_type($7) )
-	   err("exp1 i exp2 nisu istog tipa");
-	
-    }
- 	
-   ;
-
-izraz 
-   : _ID {
-	if( ($$ = lookup_symbol($1, (VAR|PAR))) == NO_INDEX )
-	    err(" '%s' undeclared", $1);
-   }
-   | literal
-   ;
 
 
 

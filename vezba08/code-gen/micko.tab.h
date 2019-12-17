@@ -60,7 +60,7 @@ extern int yydebug;
     _SEMICOLON = 270,
     _AROP = 271,
     _RELOP = 272,
-    _UPITNIK = 273,
+    _QMARK = 273,
     _COLON = 274,
     ONLY_IF = 275
   };

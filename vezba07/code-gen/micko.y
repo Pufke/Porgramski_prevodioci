@@ -42,6 +42,7 @@
 %token _SEMICOLON
 %token <i> _AROP
 %token <i> _RELOP
+%token _PLUSPLUS
 
 %type <i> num_exp exp literal
 %type <i> function_call argument rel_exp if_part
@@ -69,7 +70,7 @@ global_variable_list
            code("\n%s: WORD 1", $3);
        }else
 	    err("Globalna varijabla vec postoji !");
-     } 
+     }
      ;
 
 function_list
@@ -149,7 +150,22 @@ statement
   | assignment_statement
   | if_statement
   | return_statement
+  | inc_statement
   ;
+
+inc_statement
+ : _ID _PLUSPLUS _SEMICOLON
+   {
+	int idx = lookup_symbol($1, (VAR|PAR|GVAR));
+	if(idx == -1)
+		err(" '%s' undeclared", $1);	
+        code("\n\t\tADDS\t");
+	gen_sym_name(idx);
+        code(",$1,");
+	gen_sym_name(idx);
+
+
+   }
 
 compound_statement
   : _LBRACKET statement_list _RBRACKET
