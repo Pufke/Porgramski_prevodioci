@@ -145,10 +145,43 @@ for_statement
   : _FOR _LPAREN _ID _ASSIGN literal{
 	$<i>$ = ++lab_num; //i znaci da prosledjujemo int, lab_num oznacava broj for petlje
 	int i = lookup_symbol($3, VAR|PAR);
+
+//<name> mora biti deklarisano pre upotrebe
 	if(i == NO_INDEX)
 	  err("nedeklarisano %s", $3);
-	gen_move($5,i);
-	code("\n@for%d:", labnum);
+
+//<name> i <lit> treba da budu istog tipa
+	int idindx = lookup_symbol($3, VAR|PAR);//ovo mora zato sto je _ID neki string 
+	if( get_type(idindx) != get_type($5) )
+	  err("<name> i <lit> treba da budu istog tipa!");
+
+	gen_mov($5,i);
+	code("\n@for%d:", lab_num);
+  }
+ _SEMICOLON rel_exp
+  {
+	code("\n\t\t%s\t@exit%d", opp_jumps[$8], $<i>6);//uzimamo vrednost celog bloka , tj vrednost prve linije gde je $<i>$ = ++lab_num;, znaci ako je @for0: hocemo da skacemo @exit0
+  }
+ _SEMICOLON _ID _PLUSPLUS _RPAREN statement 
+  {
+	int i = lookup_symbol($11, VAR|PAR);
+	if(i == NO_INDEX)
+		err("nedeeklarisano %s", $11);
+//gk za inkrement (na kraju pretlje)  
+//resenje je isto kao u vezbama 7
+	if(get_type(i) == INT)
+		code("\n\t\tADDS\t");
+	else
+		code("\n\t\tADDU\t");
+
+	gen_sym_name(i);
+	code(",$1,");
+	gen_sym_name(i);
+
+	code("\n\t\tJMP \t@for%d", $<i>6);
+ 	code("\n@exit%d", $<i>6);
+	
+  }
   ;
 
 

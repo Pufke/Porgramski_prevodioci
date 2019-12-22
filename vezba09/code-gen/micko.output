@@ -32,11 +32,11 @@ Grammar
    18          | return_statement
    19          | for_statement
 
-   20 $@3: %empty
+   20 @3: %empty
 
    21 $@4: %empty
 
-   22 for_statement: _FOR _LPAREN _ID $@3 _ASSIGN literal $@4 _SEMICOLON rel_exp _SEMICOLON _ID _PLUSPLUS _RPAREN statement
+   22 for_statement: _FOR _LPAREN _ID _ASSIGN literal @3 _SEMICOLON rel_exp $@4 _SEMICOLON _ID _PLUSPLUS _RPAREN statement
 
    23 compound_statement: _LBRACKET statement_list _RBRACKET
 
@@ -126,7 +126,7 @@ statement (32)
     on left: 15 16 17 18 19, on right: 14 22 38 41
 for_statement (33)
     on left: 22, on right: 19
-$@3 (34)
+@3 (34)
     on left: 20, on right: 22
 $@4 (35)
     on left: 21, on right: 22
@@ -409,7 +409,7 @@ State 27
 
 State 28
 
-   22 for_statement: _FOR . _LPAREN _ID $@3 _ASSIGN literal $@4 _SEMICOLON rel_exp _SEMICOLON _ID _PLUSPLUS _RPAREN statement
+   22 for_statement: _FOR . _LPAREN _ID _ASSIGN literal @3 _SEMICOLON rel_exp $@4 _SEMICOLON _ID _PLUSPLUS _RPAREN statement
 
     _LPAREN  shift, and go to state 47
 
@@ -583,7 +583,7 @@ State 46
 
 State 47
 
-   22 for_statement: _FOR _LPAREN . _ID $@3 _ASSIGN literal $@4 _SEMICOLON rel_exp _SEMICOLON _ID _PLUSPLUS _RPAREN statement
+   22 for_statement: _FOR _LPAREN . _ID _ASSIGN literal @3 _SEMICOLON rel_exp $@4 _SEMICOLON _ID _PLUSPLUS _RPAREN statement
 
     _ID  shift, and go to state 56
 
@@ -678,11 +678,9 @@ State 55
 
 State 56
 
-   22 for_statement: _FOR _LPAREN _ID . $@3 _ASSIGN literal $@4 _SEMICOLON rel_exp _SEMICOLON _ID _PLUSPLUS _RPAREN statement
+   22 for_statement: _FOR _LPAREN _ID . _ASSIGN literal @3 _SEMICOLON rel_exp $@4 _SEMICOLON _ID _PLUSPLUS _RPAREN statement
 
-    $default  reduce using rule 20 ($@3)
-
-    $@3  go to state 64
+    _ASSIGN  shift, and go to state 64
 
 
 State 57
@@ -751,9 +749,12 @@ State 63
 
 State 64
 
-   22 for_statement: _FOR _LPAREN _ID $@3 . _ASSIGN literal $@4 _SEMICOLON rel_exp _SEMICOLON _ID _PLUSPLUS _RPAREN statement
+   22 for_statement: _FOR _LPAREN _ID _ASSIGN . literal @3 _SEMICOLON rel_exp $@4 _SEMICOLON _ID _PLUSPLUS _RPAREN statement
 
-    _ASSIGN  shift, and go to state 69
+    _INT_NUMBER   shift, and go to state 38
+    _UINT_NUMBER  shift, and go to state 39
+
+    literal  go to state 69
 
 
 State 65
@@ -797,12 +798,11 @@ State 68
 
 State 69
 
-   22 for_statement: _FOR _LPAREN _ID $@3 _ASSIGN . literal $@4 _SEMICOLON rel_exp _SEMICOLON _ID _PLUSPLUS _RPAREN statement
+   22 for_statement: _FOR _LPAREN _ID _ASSIGN literal . @3 _SEMICOLON rel_exp $@4 _SEMICOLON _ID _PLUSPLUS _RPAREN statement
 
-    _INT_NUMBER   shift, and go to state 38
-    _UINT_NUMBER  shift, and go to state 39
+    $default  reduce using rule 20 (@3)
 
-    literal  go to state 73
+    @3  go to state 73
 
 
 State 70
@@ -843,11 +843,9 @@ State 72
 
 State 73
 
-   22 for_statement: _FOR _LPAREN _ID $@3 _ASSIGN literal . $@4 _SEMICOLON rel_exp _SEMICOLON _ID _PLUSPLUS _RPAREN statement
+   22 for_statement: _FOR _LPAREN _ID _ASSIGN literal @3 . _SEMICOLON rel_exp $@4 _SEMICOLON _ID _PLUSPLUS _RPAREN statement
 
-    $default  reduce using rule 21 ($@4)
-
-    $@4  go to state 75
+    _SEMICOLON  shift, and go to state 75
 
 
 State 74
@@ -859,14 +857,7 @@ State 74
 
 State 75
 
-   22 for_statement: _FOR _LPAREN _ID $@3 _ASSIGN literal $@4 . _SEMICOLON rel_exp _SEMICOLON _ID _PLUSPLUS _RPAREN statement
-
-    _SEMICOLON  shift, and go to state 76
-
-
-State 76
-
-   22 for_statement: _FOR _LPAREN _ID $@3 _ASSIGN literal $@4 _SEMICOLON . rel_exp _SEMICOLON _ID _PLUSPLUS _RPAREN statement
+   22 for_statement: _FOR _LPAREN _ID _ASSIGN literal @3 _SEMICOLON . rel_exp $@4 _SEMICOLON _ID _PLUSPLUS _RPAREN statement
 
     _ID           shift, and go to state 37
     _INT_NUMBER   shift, and go to state 38
@@ -877,40 +868,49 @@ State 76
     exp            go to state 42
     literal        go to state 43
     function_call  go to state 44
-    rel_exp        go to state 77
+    rel_exp        go to state 76
+
+
+State 76
+
+   22 for_statement: _FOR _LPAREN _ID _ASSIGN literal @3 _SEMICOLON rel_exp . $@4 _SEMICOLON _ID _PLUSPLUS _RPAREN statement
+
+    $default  reduce using rule 21 ($@4)
+
+    $@4  go to state 77
 
 
 State 77
 
-   22 for_statement: _FOR _LPAREN _ID $@3 _ASSIGN literal $@4 _SEMICOLON rel_exp . _SEMICOLON _ID _PLUSPLUS _RPAREN statement
+   22 for_statement: _FOR _LPAREN _ID _ASSIGN literal @3 _SEMICOLON rel_exp $@4 . _SEMICOLON _ID _PLUSPLUS _RPAREN statement
 
     _SEMICOLON  shift, and go to state 78
 
 
 State 78
 
-   22 for_statement: _FOR _LPAREN _ID $@3 _ASSIGN literal $@4 _SEMICOLON rel_exp _SEMICOLON . _ID _PLUSPLUS _RPAREN statement
+   22 for_statement: _FOR _LPAREN _ID _ASSIGN literal @3 _SEMICOLON rel_exp $@4 _SEMICOLON . _ID _PLUSPLUS _RPAREN statement
 
     _ID  shift, and go to state 79
 
 
 State 79
 
-   22 for_statement: _FOR _LPAREN _ID $@3 _ASSIGN literal $@4 _SEMICOLON rel_exp _SEMICOLON _ID . _PLUSPLUS _RPAREN statement
+   22 for_statement: _FOR _LPAREN _ID _ASSIGN literal @3 _SEMICOLON rel_exp $@4 _SEMICOLON _ID . _PLUSPLUS _RPAREN statement
 
     _PLUSPLUS  shift, and go to state 80
 
 
 State 80
 
-   22 for_statement: _FOR _LPAREN _ID $@3 _ASSIGN literal $@4 _SEMICOLON rel_exp _SEMICOLON _ID _PLUSPLUS . _RPAREN statement
+   22 for_statement: _FOR _LPAREN _ID _ASSIGN literal @3 _SEMICOLON rel_exp $@4 _SEMICOLON _ID _PLUSPLUS . _RPAREN statement
 
     _RPAREN  shift, and go to state 81
 
 
 State 81
 
-   22 for_statement: _FOR _LPAREN _ID $@3 _ASSIGN literal $@4 _SEMICOLON rel_exp _SEMICOLON _ID _PLUSPLUS _RPAREN . statement
+   22 for_statement: _FOR _LPAREN _ID _ASSIGN literal @3 _SEMICOLON rel_exp $@4 _SEMICOLON _ID _PLUSPLUS _RPAREN . statement
 
     _IF        shift, and go to state 23
     _RETURN    shift, and go to state 24
@@ -929,6 +929,6 @@ State 81
 
 State 82
 
-   22 for_statement: _FOR _LPAREN _ID $@3 _ASSIGN literal $@4 _SEMICOLON rel_exp _SEMICOLON _ID _PLUSPLUS _RPAREN statement .
+   22 for_statement: _FOR _LPAREN _ID _ASSIGN literal @3 _SEMICOLON rel_exp $@4 _SEMICOLON _ID _PLUSPLUS _RPAREN statement .
 
     $default  reduce using rule 22 (for_statement)
