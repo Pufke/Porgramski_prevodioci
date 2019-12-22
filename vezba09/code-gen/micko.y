@@ -142,25 +142,13 @@ statement
   ;
 
 for_statement 
-  : _FOR _LPAREN _ID {
-//<name> mora biti deklarisano pre upotrebe
-	if(lookup_symbol($3, VAR|PAR) == -1)
-	  err("Promenjiva(<name>) mora biti deklarisano pre upotrebe!");
-  } _ASSIGN literal{
-//<name> i <lit> treba da budu istog tipa
-	int idindx = lookup_symbol($3, VAR|PAR);//ovo mora zato sto je _ID neki string 
-	if( get_type(idindx) != get_type($6) )
-	  err("<name> i <lit> treba da budu istog tipa!");
-  } _SEMICOLON rel_exp _SEMICOLON _ID _PLUSPLUS _RPAREN statement
-  {
-	int izlaz = take_reg();
- 	lab_num++;
-
-	code("\n\t\tMOV \t%%15,%%14");
-	code("\n\t\t%s\t@kraj%d", opp_jumps[$9], lab_num);
-        code("\n@petlja%d:", lab_num);
-	
-  }
+  : _FOR _LPAREN _ID _ASSIGN literal{
+	$<i>$ = ++lab_num; //i znaci da prosledjujemo int, lab_num oznacava broj for petlje
+	int i = lookup_symbol($3, VAR|PAR);
+	if(i == NO_INDEX)
+	  err("nedeklarisano %s", $3);
+	gen_move($5,i);
+	code("\n@for%d:", labnum);
   ;
 
 

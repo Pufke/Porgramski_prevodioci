@@ -29,3 +29,14 @@ Primer:
   for(i = 0; i < 5; i++)
     suma = suma + i;
 
+
+//kod sa for petlju	
+ MOV $0 , -8(%14)
+@for0:
+ CMPS -8(%14), $5
+ JGES @exit0
+ //suma se sama genrise 
+ ADDS -8(%14), $1, -8(%14)
+ JMP @for0
+@exit0:
+
