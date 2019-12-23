@@ -43,9 +43,13 @@
 %token <i> _AROP
 %token <i> _RELOP
 
+%token _ITERATE
+%token _TO
+
 
 %type <i> num_exp exp literal
 %type <i> function_call argument rel_exp if_part
+%type <i> iterate_statement
 
 %nonassoc ONLY_IF
 %nonassoc _ELSE
@@ -150,8 +154,51 @@ statement
   | assignment_statement
   | if_statement
   | return_statement
+  | iterate_statement 
   ;
 
+iterate_statement
+ : _ITERATE _ID{
+  //<name> mora biti deklarisano pre upotrebe
+  	int idxID = lookup_symbol($2, (VAR|PAR));
+	if(idxID == NO_INDEX)
+		err("<name> mora biti deklarisano pre upotrebe!");
+
+        $<i>$ = ++lab_num; //ZA GLOBALNE PROMENJIVE
+        code("\n@iterate%d:", lab_num);
+	code("\n\t\tMOV\t");
+	code("$1,");
+	gen_sym_name(idxID);
+
+  } literal _TO literal {
+	int idxID = lookup_symbol($2, (VAR|PAR));
+	if( (get_type(idxID) != get_type($4) ) || ( get_type(idxID) != get_type($6) ) ||  (get_type($4) != get_type($6)) )
+		err("<name> i <li1t> i <lit2> treba da budu istog tipa!"); 
+//Ako je vece skacem na labelu false u suprotno propadamo na tru
+	 gen_cmp(idxID,$6);
+	 code("\n\t\t%s\t@false%d", jumps[1], $<i>3);
+	 code("\n@true%d:", $<i>3);
+	 
+	// code("\n\t\tJMP\t@true%d:", $<i>3);
+  } statement{
+	int idxID = lookup_symbol($2, (VAR|PAR));
+		
+	if(get_type(idxID) == INT)
+  	  code("\n\t\tADDS \t");
+        else
+          code("\n\t\tADDU \t");
+	
+	gen_sym_name(idxID);
+	code(",");
+	gen_sym_name($4);
+	code(",");
+	gen_sym_name(idxID);
+
+	gen_cmp($6,idxID);
+ 	code("\n\t\t%s\t@true%d", jumps[3], $<i>3);
+        code("\n@false%d:", $<i>3);
+  }
+ ;
 
 compound_statement
   : _LBRACKET statement_list _RBRACKET
