@@ -16,7 +16,7 @@ Izlazni kod treba da proizvede rezultat 53.
 Generisanje operacije za inkrement treba da bude 
 nakon obrade kompletnog numeričkog izraza.
 
-Izgenerisani kod za y = x++ + x++:
+Izgenerisani kod za y = x++ + x++ + 42:
 
     ADDS    -4(%14),-4(%14),%0  //num_exp
     ADDS    %0,$42,%0           //num_exp

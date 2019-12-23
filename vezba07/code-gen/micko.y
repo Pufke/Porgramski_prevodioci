@@ -226,6 +226,27 @@ exp
   
   | _LPAREN num_exp _RPAREN
       { $$ = $2; }
+  | _ID _PLUSPLUS
+     {
+  
+	int idIndx = lookup_symbol($1, (VAR|PAR|GVAR));
+	int t1 = get_type(idIndx); 
+
+	if(idIndx == -1)
+		err(" '%s' undeclared", $1);	
+
+	if(get_type(idIndx) == INT)
+        	code("\n\t\tADDS\t");
+	else
+		code("\n\t\tUINT\t");	      
+	gen_sym_name(idIndx);
+        code(",$1,");
+	gen_sym_name(idIndx);
+ 
+	$$ = take_reg();
+       
+        set_type($$, t1);
+     }
   ;
 
 literal
