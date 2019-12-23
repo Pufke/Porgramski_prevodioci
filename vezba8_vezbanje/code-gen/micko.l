@@ -21,7 +21,9 @@
 "{"                  { return _LBRACKET; }
 "}"                  { return _RBRACKET; }
 ";"                  { return _SEMICOLON; }
+":"		     { return _COLON;}
 "="                  { return _ASSIGN; }
+"?" 		     {return _QMARK;}
 
 
 "+"                  { yylval.i = ADD; return _AROP; }

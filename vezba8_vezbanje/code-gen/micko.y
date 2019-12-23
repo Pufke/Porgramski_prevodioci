@@ -42,10 +42,13 @@
 %token _SEMICOLON
 %token <i> _AROP
 %token <i> _RELOP
+%token _COLON
+%token _QMARK
 
 
 %type <i> num_exp exp literal
 %type <i> function_call argument rel_exp if_part
+%type <i> cond_exp
 
 %nonassoc ONLY_IF
 %nonassoc _ELSE
@@ -209,7 +212,33 @@ exp
   
   | _LPAREN num_exp _RPAREN
       { $$ = $2; }
+  | _LPAREN rel_exp _RPAREN _QMARK cond_exp _COLON cond_exp
+      {
+	int out = take_reg();
+	lab_num++;
+
+	if(get_type($5) != get_type($7))
+		err("izrazi moraju da budu istog tipa!");
+	
+	code("\n\t\t%s\t@false%d", opp_jumps[$2], lab_num);
+        code("\n@true%d:", lab_num);
+	gen_mov($5, out);
+        code("\n\t\tJMP \t@exit%d", lab_num);
+    	code("\n@false%d:", lab_num);
+	gen_mov($7, out);
+	code("\n@exit%d:", lab_num);
+
+        $$=out;
+      }
   ;
+
+cond_exp
+ : _ID{
+	if(($$ = lookup_symbol($1, (VAR|PAR))) == NO_INDEX )
+		err(" '%s' undecalred",$1);	 
+   }
+ | literal
+ ;
 
 literal
   : _INT_NUMBER
