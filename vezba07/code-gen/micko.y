@@ -159,7 +159,10 @@ inc_statement
 	int idx = lookup_symbol($1, (VAR|PAR|GVAR));
 	if(idx == -1)
 		err(" '%s' undeclared", $1);	
-        code("\n\t\tADDS\t");
+	if(get_type($1) == INT)
+        	code("\n\t\tADDS\t");
+	else(get_type($3) == UINT)
+		code("\n\t\tUINT\t");	      
 	gen_sym_name(idx);
         code(",$1,");
 	gen_sym_name(idx);
