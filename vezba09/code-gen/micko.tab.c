@@ -1421,7 +1421,7 @@ yyreduce:
 	gen_sym_name(i);
 
 	code("\n\t\tJMP \t@for%d", (yyvsp[-8].i));
- 	code("\n@exit%d", (yyvsp[-8].i));
+ 	code("\n@exit%d:", (yyvsp[-8].i));
 	
   }
 #line 1428 "micko.tab.c" /* yacc.c:1646  */
