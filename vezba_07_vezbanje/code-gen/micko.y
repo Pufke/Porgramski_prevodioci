@@ -151,9 +151,26 @@ statement
   | assignment_statement
   | if_statement
   | return_statement
+  | inc_statement
   ;
 
-
+inc_statement //Lokalne i globalne promenljive i parametri su u _ID
+  : _ID _INC _SEMICOLON{
+  	//semanticka provera
+	//postinkrement operator može da se primeni samo na 
+	//promenljive (lokalne i globalne) i parametre.
+	int idIndx = lookup_symbol($1, (VAR|GVAR|PAR));
+	if(idIndx == -1)
+		err("postinkrement operator može da se primeni samo na promenljive (lokalne i globalne) i parametre.");
+	if(get_type(idIndx) == INT)
+		code("\n\t\tADDS\t");
+	else
+		code("\n\t\tADDU\t");
+	gen_sym_name(idIndx);
+	code(",$1,");
+	gen_sym_name(idIndx);
+  }	
+  ;
 compound_statement
   : _LBRACKET statement_list _RBRACKET
   ;
