@@ -45,6 +45,12 @@
 %token _FOR
 %token _PLUSPLUS
 
+%token _SWITCH
+%token _CASE
+%token _COLON
+%token _BREAK
+%token _DEFAULT
+
 %type <i> num_exp exp literal
 %type <i> function_call argument rel_exp if_part
 
@@ -139,7 +145,32 @@ statement
   | if_statement
   | return_statement
   | for_statement 
+  | switch_statement
   ;
+
+switch_statement
+ : _SWITCH _LPAREN _ID { 
+	int idIndx = lookup_symbol($3 , (VAR|PAR));
+	if(idIndx == NO_INDEX)
+	   err("Promenljiva mora prethodno biti deklarisana!");
+ 
+ } _RPAREN _LBRACKET switch_body default _RBRACKET 
+ ;
+
+switch_body 
+: _CASE literal _COLON statement break
+| switch_body _CASE literal _COLON statement break
+;
+
+default
+:
+| _DEFAULT _COLON  statement
+;
+
+break 
+:
+| _BREAK _SEMICOLON
+;
 
 for_statement 
   : _FOR _LPAREN _ID _ASSIGN literal{

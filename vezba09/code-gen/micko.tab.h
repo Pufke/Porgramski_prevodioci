@@ -62,7 +62,12 @@ extern int yydebug;
     _RELOP = 272,
     _FOR = 273,
     _PLUSPLUS = 274,
-    ONLY_IF = 275
+    _SWITCH = 275,
+    _CASE = 276,
+    _COLON = 277,
+    _BREAK = 278,
+    _DEFAULT = 279,
+    ONLY_IF = 280
   };
 #endif
 
@@ -76,7 +81,7 @@ union YYSTYPE
   int i;
   char *s;
 
-#line 80 "micko.tab.h" /* yacc.c:1909  */
+#line 85 "micko.tab.h" /* yacc.c:1909  */
 };
 
 typedef union YYSTYPE YYSTYPE;
