@@ -52,7 +52,7 @@
 
 %type <i> num_exp exp literal
 %type <i> function_call argument rel_exp if_part
-%type <i> iterate_statement
+%type <i> iterate_statement for_in
 
 %nonassoc ONLY_IF
 %nonassoc _ELSE
@@ -158,7 +158,86 @@ statement
   | if_statement
   | return_statement
   | iterate_statement 
+  | for_in
   ;
+
+
+for_in
+ : _FOR _ID { 
+ 	//<name> mora biti deklarisano pre upotrebe
+        int idIndx = lookup_symbol($2, VAR|PAR);
+	if(idIndx == -1)
+	   err("<name> mora biti deklarisano pre upotrebe");
+	
+	$<i>$ = ++lab_num;
+	
+	 
+  } _IN _LPAREN literal _DVETACKE literal{
+        int idIndx = lookup_symbol($2, VAR|PAR);
+        if( (get_type(idIndx) != get_type($6)) || (get_type(idIndx) != get_type($8)) || (get_type($6) != get_type($8)) )
+	   err("<name> i <li1t> i <lit2> treba da budu istog tipa");
+	
+	code("\n\t\tMOV\t");
+	gen_sym_name($6);	
+	code(",");
+	gen_sym_name(idIndx);
+
+	code("\n@for%d:", lab_num);
+
+	if(get_type($6) == INT)
+    		code("\n\t\tCMPS \t");
+ 	 else
+    		code("\n\t\tCMPU \t");
+	gen_sym_name(idIndx);
+	code(",");
+	gen_sym_name($8);
+	
+	if(atoi(get_name($6)) < atoi(get_name($8))){
+		code("\n\t\t%s\t@false%d", jumps[1], $<i>3);//Ako je lit2>lit1	
+	}else{
+		code("\n\t\t%s\t@false%d", jumps[0], $<i>3);//Ako je lit2>=lit1		
+	}
+	
+  } _RPAREN statement{
+	if(atoi(get_name($6)) < atoi(get_name($8))){
+        	int idIndx = lookup_symbol($2, VAR|PAR);
+
+  		if(get_type(idIndx) == INT)
+    			code("\n\t\tADDS \t");
+      	        else
+    			code("\n\t\tADDU \t");
+		gen_sym_name(idIndx);
+		code(",$1,");
+		gen_sym_name(idIndx);
+
+		code("\n\t\tJMP \t@for%d", $<i>3);
+		code("\n@false%d:", $<i>3);
+	}else{	
+		int idIndx = lookup_symbol($2, VAR|PAR);
+		code("\n@false%d:", $<i>3);
+		if(get_type(idIndx) == INT)
+    			code("\n\t\tSUBS \t");
+      	        else
+    			code("\n\t\tSUBU \t");
+		gen_sym_name(idIndx);
+		code(",$1,");
+		gen_sym_name(idIndx);
+		
+		if(get_type($6) == INT)
+    			code("\n\t\tCMPS \t");
+ 		 else
+    			code("\n\t\tCMPU \t");
+		gen_sym_name(idIndx);
+		code(",");
+		gen_sym_name($8);
+		
+		code("\n\t\t%s\t@for%d", jumps[3],$<i>3);
+	}
+  }
+ ;
+
+
+
 
 iterate_statement
  : _ITERATE _ID{

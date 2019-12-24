@@ -5,17 +5,16 @@ main:
 		SUBS	%15,$8,%15
 @main_body:
 		MOV 	$0,-8(%14)
-@iterate0:
-		MOV	$1,-4(%14)
-		CMPS 	-4(%14),$10
-		JGTS	@false0
-@true0:
-		ADDS	-4(%14),-8(%14),%0
+		MOV	$5,-4(%14)
+@for0:
+		CMPS 	-4(%14),$1
+		JLTS	@false0
+		ADDS	-8(%14),-4(%14),%0
 		MOV 	%0,-8(%14)
-		ADDS 	-4(%14),$3,-4(%14)
-		CMPS 	$10,-4(%14)
-		JGES	@true0
 @false0:
+		SUBS 	-4(%14),$1,-4(%14)
+		CMPS 	-4(%14),$1
+		JGES	@for0
 		MOV 	-8(%14),%13
 		JMP 	@main_exit
 @main_exit:
